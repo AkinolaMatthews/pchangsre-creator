@@ -1,0 +1,20 @@
+{
+    "name": "technical-assessment",
+    "version": "1.0.0",
+    "description": "Technical Assessment - A trust-minimised implementation of a multiplayer online game",
+    "type": "module",
+    "engines": {
+        "node": ">=20.0.0",
+        "npm": ">=10.0.0"
+    },
+    "engineStrict": false,
+    "scripts": {
+        "postinstall": "node server/game/game && cd server && npm install --include=dev && cd ../client && npm install && cd ..",
+        "client": "cd client && npx vite",
+        "server": "node start-server.js",
+        "install-server": "cd server && npm install --include=dev"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.0"
+    }
+}
