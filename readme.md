@@ -17,8 +17,8 @@ Your first task is to get the game running successfully, fix any issues you find
 #### 1. Clone the repository
 
 ```bash
-git clone https://github.com/davideliasdev11/TechnicalAssessment.git
-cd TechnicalAssessment
+git https://github.com/pchangsre-creator/Technical-Assessment-Backend.git
+cd Technical-Assessment-Backend
 ```
 
 #### 2. Install dependencies
