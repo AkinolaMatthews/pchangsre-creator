@@ -112,3 +112,8 @@ io.onConnection(channel => {
         console.log(channel.userData.address, 'disconnected')
     })
 })
+const PORT = process.env.PORT || 9208
+
+server.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`)
+})
