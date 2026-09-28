@@ -1,48 +1,24 @@
-import { geckos } from '@geckos.io/client'
 import { Scene } from 'phaser'
-import { CONNECT_SCENE, MAIN_SCENE } from '../utils/keys'
-
+import { CONNECT_SCENE, MAIN_SCENE, START_SCENE } from '../utils/keys'
+import { Channel, panel } from '../utils/channel'
 export class ConnectScene extends Scene {
-	sig?: string
-	address?: string
-
-	constructor() {
-		super(CONNECT_SCENE)
-	}
-
-	init({ sig, address }: { sig: string, address: string }) {
-		this.sig = sig
-		this.address = address
-	}
-
-	create() {
-        //set bg color
-        this.cameras.main.setBackgroundColor('0x171717')
-
-		const { width, height } = this.scale
-		const text = this.add.text(width * 0.5, height * 0.5, 'logging in to server...').setOrigin(0.5, 0.5)
-
-		const host = import.meta.env.VITE_HOST ? import.meta.env.VITE_HOST : "localhost"
-		const port = import.meta.env.VITE_SERVER_PORT ? parseInt(import.meta.env.VITE_SERVER_PORT) : 9208
-
-		const channel = geckos({
-			url: host,
-			port: port,
-			authorization: `${this.address} ${this.sig}`,
-		})
-		
-		channel.onConnect(error => {
-			if (error) {
-				console.error(error.message)
-				text.setText(`error ${error.status}: ${error.statusText}. ${error.message}`)
-			}
-
-			channel.on('ready', (initialPos) => {
-				text.setText('connected!')
-				setTimeout(() => {
-					this.scene.start(MAIN_SCENE, { channel, initialPos })
-				}, 500)
-			})
-		})
-	}
+  login: object = {}
+  constructor() { super(CONNECT_SCENE) }
+  init(login: object) { this.login = login }
+  create() {
+    const ui = panel('<h1>Entering dungeon...</h1><p role="status">Connecting to game server</p><button>Back</button>')
+    const channel = new Channel(this.login)
+    let connected = false
+    const status = ui.querySelector('p')!
+    const timer = this.time.delayedCall(10_000, () => { status.textContent = 'Connection timed out. Try again.'; channel.close() })
+    channel.on('ready', state => {
+      connected = true
+      timer.remove()
+      this.scene.start(MAIN_SCENE, { channel, state })
+    })
+    channel.on('error', message => { status.textContent = message })
+    channel.on('disconnect', message => { status.textContent = message })
+    ui.querySelector('button')!.addEventListener('click', () => this.scene.start(START_SCENE))
+    this.events.once('shutdown', () => { ui.remove(); timer.remove(); if (!connected) channel.close() })
+  }
 }
