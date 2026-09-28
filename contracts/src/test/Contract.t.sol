@@ -40,7 +40,7 @@ contract ContractTest is Test {
                             "VerifyPacket(address request,uint256 deadline,address receiver)"
                         ),
                         address(manager),
-                        (2 ^ 256) - 1,
+                        type(uint256).max,
                         address(this)
                     )
                 )
@@ -66,7 +66,7 @@ contract ContractTest is Test {
                 r: r,
                 s: s,
                 request: address(manager),
-                deadline: (2 ^ 256) - 1,
+                deadline: type(uint256).max,
                 receiver: address(this)
             })
         );
@@ -91,7 +91,7 @@ contract ContractTest is Test {
                 r: r,
                 s: s,
                 request: address(manager),
-                deadline: (2 ^ 256) - 1,
+                deadline: type(uint256).max,
                 receiver: address(this)
             })
         );
@@ -104,7 +104,7 @@ contract ContractTest is Test {
                 r: r,
                 s: s,
                 request: address(manager),
-                deadline: (2 ^ 256) - 1,
+                deadline: type(uint256).max,
                 receiver: address(this)
             })
         );
@@ -112,7 +112,7 @@ contract ContractTest is Test {
 
     function testUntrustedSigner(uint256 privatekey) public {
         vm.assume(privatekey != 0);
-        vm.assume(privatekey < (2 ^ 256) - 1);
+        vm.assume(privatekey < 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141);
         vm.assume(
             privatekey !=
                 uint256(
@@ -131,7 +131,7 @@ contract ContractTest is Test {
                 r: r,
                 s: s,
                 request: address(manager),
-                deadline: (2 ^ 256) - 1,
+                deadline: type(uint256).max,
                 receiver: address(this)
             })
         );

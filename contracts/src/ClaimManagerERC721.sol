@@ -3,6 +3,7 @@ pragma solidity 0.8.13;
 
 import "solmate/tokens/ERC721.sol";
 import "./ClaimManager.sol";
+import "openzeppelin-contracts/contracts/utils/Strings.sol";
 
 ///@title ClaimManagerERC721
 ///@author nutcloud🧙‍♂️.eth
@@ -40,7 +41,7 @@ contract ClaimManagerERC721 is ERC721, ClaimManager {
     {
         require(_ownerOf[id] != address(0), "NOT MINTED");
 
-        return string(abi.encodePacked(_baseURI, id));
+        return string(abi.encodePacked(_baseURI, Strings.toString(id)));
     }
 
     ///-------------------------------------------------------

@@ -1,5 +1,12 @@
 # Technical Assessment
 
+**Playable demo:** `npm install` then `npm run dev`, open http://localhost:3000 and click **Play demo**. Move with WASD/arrows; collect the coin and replay. No wallet required.
+
+Review and fixes: [Assessment report](docs/ASSESSMENT.md). Design deliverables: [Backend](docs/BACKEND-ARCHITECTURE.md) · [Blockchain](docs/BLOCKCHAIN-ARCHITECTURE.md).
+
+The unsafe original install-time remote-code loader has been removed. The original assignment follows.
+
+
 ## Challenge
 
 It is a simple roguelike game built with **Phaser.js and Node.js**. It is a Crypto Play-to-Earn game.
@@ -17,7 +24,7 @@ Your first task is to get the game running successfully, fix any issues you find
 #### 1. Clone the repository
 
 ```bash
-git https://github.com/pchangsre-creator/Technical-Assessment-Backend.git
+git clone https://github.com/pchangsre-creator/Technical-Assessment-Backend.git
 cd Technical-Assessment-Backend
 ```
 
